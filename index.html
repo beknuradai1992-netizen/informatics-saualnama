@@ -1,1 +1,588 @@
-...
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Информатика — Сауалнама</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #101b45, #174ea6);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    color: #18213b;
+    width: 100%;
+    max-width: 650px;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #174ea6;
+    margin-top: 0;
+}
+
+.subtitle {
+    text-align: center;
+    color: #65718a;
+    line-height: 1.6;
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.primary {
+    background: #2563eb;
+    color: white;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.answer {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin: 10px 0;
+    background: #f0f4ff;
+    color: #18213b;
+    border: 2px solid #e0e7ff;
+}
+
+.answer:hover {
+    background: #dce7ff;
+}
+
+.answer.selected {
+    border-color: #2563eb;
+    background: #dce7ff;
+}
+
+.answer.correct {
+    background: #d1fae5;
+    border-color: #10b981;
+}
+
+.answer.wrong {
+    background: #fee2e2;
+    border-color: #ef4444;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    margin: 15px 0 25px;
+    overflow: hidden;
+}
+
+.bar {
+    width: 0%;
+    height: 100%;
+    background: #2563eb;
+    transition: width 0.3s;
+}
+
+.hidden {
+    display: none;
+}
+
+#question {
+    font-size: 21px;
+    line-height: 1.4;
+}
+
+#feedback {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.result {
+    text-align: center;
+}
+
+.score {
+    font-size: 48px;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+
+    #question {
+        font-size: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <section id="startScreen">
+        <h1>💻 Информатика тесті</h1>
+
+        <p class="subtitle">
+            Информатика пәнінен біліміңді тексер!
+            <br>
+            30 сұрақ · 4 жауап нұсқасы
+            <br>
+            Әр дұрыс жауапқа 1 ұпай беріледі.
+        </p>
+
+        <button class="primary" onclick="startTest()">
+            Тестті бастау
+        </button>
+    </section>
+
+    <section id="quizScreen" class="hidden">
+
+        <div class="top">
+            <span id="counter">1 / 30 сұрақ</span>
+            <span id="score">Ұпай: 0</span>
+        </div>
+
+        <div class="progress">
+            <div class="bar" id="bar"></div>
+        </div>
+
+        <h2 id="question"></h2>
+
+        <div id="answers"></div>
+
+        <p id="feedback"></p>
+
+        <button id="nextBtn" class="primary hidden"
+                onclick="nextQuestion()">
+            Келесі сұрақ →
+        </button>
+
+    </section>
+
+    <section id="resultScreen" class="hidden result">
+        <h1>🎉 Тест аяқталды!</h1>
+
+        <p>Сенің нәтижең:</p>
+
+        <div class="score" id="finalScore"></div>
+
+        <p id="message"></p>
+
+        <button class="primary" onclick="restartTest()">
+            Қайта тапсыру
+        </button>
+    </section>
+
+</div>
+
+<script>
+const questions = [
+{
+    q: "1. Информатика нені зерттейді?",
+    a: [
+        "Ақпаратты өңдеу, сақтау және жеткізу тәсілдерін",
+        "Тек жануарларды",
+        "Тек өсімдіктерді",
+        "Тек ғарышты"
+    ],
+    c: 0
+},
+{
+    q: "2. Компьютердің негізгі есептеу құрылғысы қайсы?",
+    a: ["Пернетақта", "Процессор", "Тінтуір", "Монитор"],
+    c: 1
+},
+{
+    q: "3. Ақпараттың ең кіші өлшем бірлігі қандай?",
+    a: ["Байт", "Килобайт", "Бит", "Мегабайт"],
+    c: 2
+},
+{
+    q: "4. 1 байт неше биттен тұрады?",
+    a: ["2 бит", "4 бит", "8 бит", "16 бит"],
+    c: 2
+},
+{
+    q: "5. Мәтін теруге арналған құрылғы қайсы?",
+    a: ["Монитор", "Пернетақта", "Принтер", "Динамик"],
+    c: 1
+},
+{
+    q: "6. Ақпаратты экранда көрсететін құрылғы?",
+    a: ["Монитор", "Сканер", "Микрофон", "Тінтуір"],
+    c: 0
+},
+{
+    q: "7. Компьютердің ақпаратты сақтайтын құрылғысы қайсы?",
+    a: ["Монитор", "Пернетақта", "SSD", "Тінтуір"],
+    c: 2
+},
+{
+    q: "8. Интернет дегеніміз не?",
+    a: [
+        "Мәтін жазатын бағдарлама",
+        "Дүниежүзілік компьютерлік желі",
+        "Компьютердің бөлшегі",
+        "Ойынның бір түрі"
+    ],
+    c: 1
+},
+{
+    q: "9. Веб-сайттарды ашуға арналған бағдарлама?",
+    a: ["Калькулятор", "Paint", "Браузер", "Блокнот"],
+    c: 2
+},
+{
+    q: "10. Қайсысы веб-браузер болып табылады?",
+    a: ["Google Chrome", "Microsoft Word", "Paint", "Калькулятор"],
+    c: 0
+},
+{
+    q: "11. Ақпаратты қағазға басып шығаратын құрылғы?",
+    a: ["Сканер", "Принтер", "Микрофон", "Монитор"],
+    c: 1
+},
+{
+    q: "12. Компьютерге мәтін теруге арналған бағдарлама?",
+    a: ["Microsoft Word", "Paint", "Камера", "Калькулятор"],
+    c: 0
+},
+{
+    q: "13. Презентация жасауға арналған бағдарлама?",
+    a: ["PowerPoint", "Блокнот", "Калькулятор", "Дыбыс жазу"],
+    c: 0
+},
+{
+    q: "14. Электрондық пошта не үшін қажет?",
+    a: [
+        "Тек сурет салу үшін",
+        "Электрондық хабарламалар жіберу үшін",
+        "Компьютерді өшіру үшін",
+        "Музыка тыңдау үшін ғана"
+    ],
+    c: 1
+},
+{
+    q: "15. Құпиясөз қандай болуы керек?",
+    a: [
+        "Тек 12345",
+        "Өте қысқа",
+        "Күрделі және ешкімге белгісіз",
+        "Барлығына бірдей"
+    ],
+    c: 2
+},
+{
+    q: "16. Компьютерлік вирус дегеніміз не?",
+    a: [
+        "Зиян келтіруі мүмкін бағдарлама",
+        "Компьютердің экраны",
+        "Пернетақтаның батырмасы",
+        "Қалыпты мәтіндік файл"
+    ],
+    c: 0
+},
+{
+    q: "17. Антивирус не үшін қолданылады?",
+    a: [
+        "Мәтін жазу үшін",
+        "Зиянды бағдарламаларды анықтау және жою үшін",
+        "Сурет басып шығару үшін",
+        "Экранды тазалау үшін"
+    ],
+    c: 1
+},
+{
+    q: "18. Файл дегеніміз не?",
+    a: [
+        "Ақпарат сақталатын атауы бар деректер жиынтығы",
+        "Тек компьютердің корпусы",
+        "Электр сымы",
+        "Компьютер үстелі"
+    ],
+    c: 0
+},
+{
+    q: "19. Бума не үшін қолданылады?",
+    a: [
+        "Файлдарды реттеп сақтау үшін",
+        "Дыбыс шығару үшін",
+        "Мәтінді басып шығару үшін",
+        "Интернетті өшіру үшін"
+    ],
+    c: 0
+},
+{
+    q: "20. Операциялық жүйеге қайсысы жатады?",
+    a: ["Windows", "Google", "YouTube", "WhatsApp"],
+    c: 0
+},
+{
+    q: "21. Алгоритм дегеніміз не?",
+    a: [
+        "Компьютердің түсі",
+        "Мәселені шешуге арналған реттелген әрекеттер тізбегі",
+        "Музыкалық файл",
+        "Интернет желісі"
+    ],
+    c: 1
+},
+{
+    q: "22. Программалау тілі қайсы?",
+    a: ["Python", "Windows", "Google Chrome", "YouTube"],
+    c: 0
+},
+{
+    q: "23. HTML негізінен не үшін қолданылады?",
+    a: [
+        "Веб-беттің құрылымын жасау үшін",
+        "Компьютерді жөндеу үшін",
+        "Вирус жұқтыру үшін",
+        "Музыка тыңдау үшін"
+    ],
+    c: 0
+},
+{
+    q: "24. CSS не үшін қолданылады?",
+    a: [
+        "Компьютерді қосу үшін",
+        "Веб-беттің сыртқы көрінісін безендіру үшін",
+        "Файлдарды жою үшін",
+        "Пернетақтаны басқару үшін"
+    ],
+    c: 1
+},
+{
+    q: "25. JavaScript не үшін қолданылады?",
+    a: [
+        "Веб-беттерге интерактивтілік қосу үшін",
+        "Тек сурет басып шығару үшін",
+        "Компьютерді тасымалдау үшін",
+        "Мониторды тазалау үшін"
+    ],
+    c: 0
+},
+{
+    q: "26. Екілік санау жүйесінде қандай цифрлар қолданылады?",
+    a: ["0 және 1", "1 және 2", "0-ден 9-ға дейін", "1 және 9"],
+    c: 0
+},
+{
+    q: "27. Компьютерлік желі дегеніміз не?",
+    a: [
+        "Бір-бірімен байланысқан құрылғылар жүйесі",
+        "Компьютердің пернетақтасы",
+        "Мәтіндік құжат",
+        "Бір ғана бағдарлама"
+    ],
+    c: 0
+},
+{
+    q: "28. Бұлттық сақтау қызметі не үшін қажет?",
+    a: [
+        "Файлдарды интернет арқылы сақтау үшін",
+        "Компьютерді бояу үшін",
+        "Пернетақтаны тазалау үшін",
+        "Экран жарығын арттыру үшін"
+    ],
+    c: 0
+},
+{
+    q: "29. Ақпараттық қауіпсіздік үшін не істеу керек?",
+    a: [
+        "Құпиясөзді барлығына айту",
+        "Белгісіз сілтемелердің бәрін ашу",
+        "Жеке деректерді қорғау",
+        "Барлық файлды бейтаныс адамға жіберу"
+    ],
+    c: 2
+},
+{
+    q: "30. Компьютерді дұрыс өшірудің жолы қайсы?",
+    a: [
+        "Тоқтан бірден ажырату",
+        "Жүйедегі «Өшіру» пәрменін пайдалану",
+        "Мониторды ғана сөндіру",
+        "Пернетақтаны ажырату"
+    ],
+    c: 1
+}
+];
+
+let current = 0;
+let points = 0;
+let answered = false;
+
+function startTest() {
+    current = 0;
+    points = 0;
+
+    document.getElementById("startScreen").classList.add("hidden");
+    document.getElementById("resultScreen").classList.add("hidden");
+    document.getElementById("quizScreen").classList.remove("hidden");
+
+    showQuestion();
+}
+
+function showQuestion() {
+    answered = false;
+
+    const q = questions[current];
+
+    document.getElementById("counter").textContent =
+        (current + 1) + " / " + questions.length + " сұрақ";
+
+    document.getElementById("score").textContent =
+        "Ұпай: " + points;
+
+    document.getElementById("bar").style.width =
+        (current / questions.length * 100) + "%";
+
+    document.getElementById("question").textContent = q.q;
+    document.getElementById("feedback").textContent = "";
+
+    const answersBox = document.getElementById("answers");
+    answersBox.innerHTML = "";
+
+    document.getElementById("nextBtn").classList.add("hidden");
+
+    q.a.forEach((answer, index) => {
+        const btn = document.createElement("button");
+
+        btn.className = "answer";
+        btn.textContent =
+            String.fromCharCode(65 + index) + ". " + answer;
+
+        btn.onclick = () => chooseAnswer(index, btn);
+
+        answersBox.appendChild(btn);
+    });
+}
+
+function chooseAnswer(index, btn) {
+    if (answered) return;
+
+    answered = true;
+
+    const q = questions[current];
+    const buttons = document.querySelectorAll(".answer");
+
+    buttons.forEach((button, i) => {
+        button.disabled = true;
+
+        if (i === q.c) {
+            button.classList.add("correct");
+        }
+    });
+
+    if (index === q.c) {
+        points++;
+        document.getElementById("feedback").textContent =
+            "✅ Дұрыс жауап!";
+        document.getElementById("feedback").style.color = "#059669";
+    } else {
+        btn.classList.add("wrong");
+
+        document.getElementById("feedback").textContent =
+            "❌ Қате! Дұрыс жауап жасыл түспен көрсетілген.";
+        document.getElementById("feedback").style.color = "#dc2626";
+    }
+
+    document.getElementById("score").textContent =
+        "Ұпай: " + points;
+
+    document.getElementById("bar").style.width =
+        ((current + 1) / questions.length * 100) + "%";
+
+    const nextBtn = document.getElementById("nextBtn");
+
+    nextBtn.textContent =
+        current === questions.length - 1
+        ? "Нәтижені көру"
+        : "Келесі сұрақ →";
+
+    nextBtn.classList.remove("hidden");
+}
+
+function nextQuestion() {
+    if (!answered) return;
+
+    current++;
+
+    if (current < questions.length) {
+        showQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    document.getElementById("quizScreen").classList.add("hidden");
+    document.getElementById("resultScreen").classList.remove("hidden");
+
+    document.getElementById("finalScore").textContent =
+        points + " / " + questions.length;
+
+    let message = "";
+
+    if (points >= 27) {
+        message = "🏆 Өте жақсы! Сен информатиканы керемет білесің!";
+    } else if (points >= 21) {
+        message = "👏 Жақсы нәтиже! Аздап қайталасаң, одан да жақсы болады.";
+    } else if (points >= 15) {
+        message = "👍 Жаман емес! Информатика тақырыптарын қайталап көр.";
+    } else {
+        message = "📚 Тағы дайындалып, қайта тапсырып көр!";
+    }
+
+    document.getElementById("message").textContent = message;
+}
+
+function restartTest() {
+    document.getElementById("resultScreen").classList.add("hidden");
+    startTest();
+}
+</script>
+
+</body>
+</html>
