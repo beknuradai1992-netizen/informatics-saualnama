@@ -1,399 +1,127 @@
-<!DOCTYPE html>
-<html lang="kk">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Биология бойынша сауалнама</title>
+questions = [
+    ("Компьютердің миы қалай аталады?",
+     ["A) Монитор", "B) Процессор", "C) Тінтуір", "D) Принтер"], "B"),
 
-<style>
-* { box-sizing: border-box; }
+    ("Ақпаратты экранға шығаратын құрылғы?",
+     ["A) Монитор", "B) Пернетақта", "C) Микрофон", "D) Тінтуір"], "A"),
 
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #064e3b, #22c55e);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    ("Мәтін енгізуге арналған құрылғы?",
+     ["A) Принтер", "B) Монитор", "C) Пернетақта", "D) Динамик"], "C"),
 
-.box {
-  background: white;
-  color: #222;
-  width: 100%;
-  max-width: 550px;
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px #003d2560;
-}
+    ("Интернет дегеніміз не?",
+     ["A) Ойын", "B) Әлемдік компьютерлік желі", "C) Компьютер", "D) Бағдарлама"], "B"),
 
-h1 {
-  color: #15803d;
-  text-align: center;
-}
+    ("1 байтта неше бит бар?",
+     ["A) 2", "B) 4", "C) 8", "D) 16"], "C"),
 
-.subtitle {
-  text-align: center;
-  color: #666;
-}
+    ("Операциялық жүйені таңда:",
+     ["A) Windows", "B) YouTube", "C) Google", "D) Telegram"], "A"),
 
-.progress {
-  background: #ddd;
-  height: 9px;
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 20px 0;
-}
+    ("Мәтін жазуға арналған бағдарлама?",
+     ["A) Paint", "B) Word", "C) Chrome", "D) Calculator"], "B"),
 
-#bar {
-  background: #22c55e;
-  height: 100%;
-  width: 0;
-}
+    ("Кесте жасауға арналған бағдарлама?",
+     ["A) Excel", "B) Paint", "C) Блокнот", "D) Chrome"], "A"),
 
-#question {
-  font-size: 20px;
-  line-height: 1.5;
-}
+    ("Презентация жасауға арналған бағдарлама?",
+     ["A) Word", "B) Excel", "C) PowerPoint", "D) Paint"], "C"),
 
-.option {
-  display: block;
-  padding: 14px;
-  margin: 10px 0;
-  background: #f0fdf4;
-  border: 2px solid #bbf7d0;
-  border-radius: 10px;
-  cursor: pointer;
-}
+    ("Веб-сайттарды ашатын бағдарлама?",
+     ["A) Браузер", "B) Антивирус", "C) Калькулятор", "D) Архиватор"], "A"),
 
-.option:has(input:checked) {
-  background: #bbf7d0;
-  border-color: #16a34a;
-}
+    ("Python дегеніміз не?",
+     ["A) Ойын құрылғысы", "B) Бағдарламалау тілі", "C) Браузер", "D) Компьютер"], "B"),
 
-.option input {
-  margin-right: 10px;
-}
+    ("Алгоритм дегеніміз не?",
+     ["A) Реттелген қадамдар жиынтығы", "B) Монитор", "C) Файл", "D) Пернетақта"], "A"),
 
-button {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 10px;
-  background: #15803d;
-  color: white;
-  font-size: 17px;
-  cursor: pointer;
-  margin-top: 15px;
-}
+    ("Компьютердің уақытша жады?",
+     ["A) HDD", "B) SSD", "C) RAM", "D) USB"], "C"),
 
-button:active {
-  background: #166534;
-}
+    ("Компьютерге дыбыс енгізетін құрылғы?",
+     ["A) Микрофон", "B) Монитор", "C) Принтер", "D) Тінтуір"], "A"),
 
-.hidden {
-  display: none;
-}
+    ("Қағазға мәтін шығаратын құрылғы?",
+     ["A) Сканер", "B) Принтер", "C) Микрофон", "D) Процессор"], "B"),
 
-#result {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-}
+    ("Сурет салуға арналған бағдарлама?",
+     ["A) Paint", "B) Excel", "C) Word", "D) Chrome"], "A"),
 
-.footer {
-  text-align: center;
-  font-size: 13px;
-  color: #777;
-  margin-top: 20px;
-}
-</style>
-</head>
+    ("Файл дегеніміз не?",
+     ["A) Деректер сақталатын атаулы нысан", "B) Монитор", "C) Тінтуір", "D) Желі"], "A"),
 
-<body>
+    ("Файлдарды реттеп сақтайтын орын?",
+     ["A) Қапшық", "B) Процессор", "C) Пернетақта", "D) Экран"], "A"),
 
-<div class="box">
+    ("Қауіпсіз құпиясөз қандай болуы керек?",
+     ["A) 12345", "B) Өз атың", "C) Ұзын әрі күрделі", "D) 11111"], "C"),
 
-  <h1>🧬 Биология</h1>
-  <p class="subtitle">Біліміңді тексер!</p>
+    ("Антивирус не үшін керек?",
+     ["A) Вирустардан қорғау үшін", "B) Мәтін жазу үшін", "C) Сурет салу үшін", "D) Музыка тыңдау үшін"], "A"),
 
-  <div id="quiz">
-    <div class="progress">
-      <div id="bar"></div>
-    </div>
+    ("HTML не үшін қолданылады?",
+     ["A) Веб-беттің құрылымын жасауға", "B) Компьютерді өшіруге", "C) Музыка тыңдауға", "D) Вирус жасауға"], "A"),
 
-    <p id="counter"></p>
-    <h2 id="question"></h2>
-    <div id="answers"></div>
+    ("CSS не үшін қолданылады?",
+     ["A) Веб-бетті безендіруге", "B) Файл өшіруге", "C) Дыбыс жазуға", "D) Компьютерді қосуға"], "A"),
 
-    <button onclick="nextQuestion()" id="next">
-      Келесі сұрақ →
-    </button>
+    ("Wi-Fi не үшін қажет?",
+     ["A) Сымсыз желіге қосылу үшін", "B) Мәтін теру үшін", "C) Сурет салу үшін", "D) Қағаз басу үшін"], "A"),
 
-    <p class="footer">30 сұрақ · Әр дұрыс жауапқа 1 ұпай</p>
-  </div>
+    ("USB флеш-жад не үшін қолданылады?",
+     ["A) Деректер сақтау үшін", "B) Дыбыс шығару үшін", "C) Мәтін көрсету үшін", "D) Интернет жылдамдату үшін"], "A"),
 
-  <div id="finish" class="hidden">
-    <h2 style="text-align:center">🎉 Сауалнама аяқталды!</h2>
-    <p id="result"></p>
-    <p id="message" style="text-align:center"></p>
-    <button onclick="restart()">Қайта өту ↻</button>
-  </div>
+    ("Ақпараттың ең кіші өлшем бірлігі?",
+     ["A) Байт", "B) Бит", "C) Килобайт", "D) Мегабайт"], "B"),
 
-</div>
+    ("Қайсысы браузер?",
+     ["A) Google Chrome", "B) Windows", "C) Word", "D) Excel"], "A"),
 
-<script>
-const questions = [
-{
- q:"1. Биология ғылымы нені зерттейді?",
- a:["Ғарышты","Тірі ағзаларды","Тау жыныстарын","Ауа райын"],
- c:1
-},
-{
- q:"2. Адамның тыныс алу мүшесі қайсы?",
- a:["Жүрек","Асқазан","Өкпе","Бүйрек"],
- c:2
-},
-{
- q:"3. Өсімдікке фотосинтез үшін не қажет?",
- a:["Тек топырақ","Жарық, су және көмірқышқыл газы","Тек оттек","Тек құм"],
- c:1
-},
-{
- q:"4. Адам жүрегінде неше қуыc бар?",
- a:["2","3","4","5"],
- c:2
-},
-{
- q:"5. Қанның қызыл түсін беретін зат?",
- a:["Хлорофилл","Гемоглобин","Кальций","Инсулин"],
- c:1
-},
-{
- q:"6. Өсімдіктің суды сіңіретін мүшесі?",
- a:["Гүл","Жапырақ","Тамыр","Жеміс"],
- c:2
-},
-{
- q:"7. Адам денесіндегі ең үлкен мүше?",
- a:["Жүрек","Тері","Өкпе","Бауыр"],
- c:1
-},
-{
- q:"8. Жасушаның басқару орталығы?",
- a:["Ядро","Қабықша","Вакуоль","Цитоплазма"],
- c:0
-},
-{
- q:"9. Қай жануар сүтқоректі?",
- a:["Бақа","Көгершін","Дельфин","Қолтырауын"],
- c:2
-},
-{
- q:"10. Балықтар немен тыныс алады?",
- a:["Өкпемен","Желбезекпен","Терімен ғана","Трахеямен"],
- c:1
-},
-{
- q:"11. Адамның қанын бүкіл денеге айдайтын мүше?",
- a:["Асқазан","Жүрек","Бүйрек","Ішек"],
- c:1
-},
-{
- q:"12. Фотосинтез кезінде бөлінетін газ?",
- a:["Азот","Көмірқышқыл газы","Оттек","Сутек"],
- c:2
-},
-{
- q:"13. Адамда неше өкпе бар?",
- a:["1","2","3","4"],
- c:1
-},
-{
- q:"14. Сүйектердің негізгі қызметтерінің бірі?",
- a:["Денеге тірек болу","Қан айдау","Ас қорыту","Ауа сүзу"],
- c:0
-},
-{
- q:"15. Қайсысы омыртқалы жануар?",
- a:["Жауынқұрт","Өрмекші","Балық","Ұлу"],
- c:2
-},
-{
- q:"16. Ас қорыту қай мүшеден басталады?",
- a:["Асқазан","Ауыз қуысы","Аш ішек","Бауыр"],
- c:1
-},
-{
- q:"17. Өсімдіктің жасыл түсін беретін пигмент?",
- a:["Гемоглобин","Меланин","Хлорофилл","Кератин"],
- c:2
-},
-{
- q:"18. Адам ағзасындағы қанды сүзетін мүше?",
- a:["Бүйрек","Өкпе","Жүрек","Асқазан"],
- c:0
-},
-{
- q:"19. Қайсысы жәндік?",
- a:["Өрмекші","Құмырсқа","Өзен шаяны","Ұлу"],
- c:1
-},
-{
- q:"20. Адамның ересек кезіндегі тістерінің қалыпты толық саны?",
- a:["20","28","32","36"],
- c:2
-},
-{
- q:"21. Тұқымнан не өсіп шығады?",
- a:["Жаңа өсімдік","Тек тас","Су","Топырақ"],
- c:0
-},
-{
- q:"22. Адамның жүйке жүйесінің негізгі мүшесі?",
- a:["Ми","Асқазан","Жүрек","Бауыр"],
- c:0
-},
-{
- q:"23. Қайсысы өсімдікке жатады?",
- a:["Саңырауқұлақ","Қарағай","Бактерия","Амеба"],
- c:1
-},
-{
- q:"24. Қосмекенді жануарды көрсет.",
- a:["Бақа","Түйе","Бүркіт","Акула"],
- c:0
-},
-{
- q:"25. ДНҚ-ның негізгі қызметі?",
- a:["Дыбыс шығару","Тұқымқуалаушылық ақпаратты сақтау","Қан айдау","Қоректі шайнау"],
- c:1
-},
-{
- q:"26. Адамға энергия беретін негізгі қоректік заттардың бірі?",
- a:["Көмірсулар","Су ғана","Минералды тұздар ғана","Оттек"],
- c:0
-},
-{
- q:"27. Өсімдіктің көбею мүшесі?",
- a:["Тамыр","Сабақ","Гүл","Жапырақ"],
- c:2
-},
-{
- q:"28. Ағзаға оттек жеткізуге қатысатын қан жасушасы?",
- a:["Эритроцит","Тромбоцит","Лейкоцит","Нейрон"],
- c:0
-},
-{
- q:"29. Қай жануар омыртқасыз?",
- a:["Жылқы","Бүркіт","Көбелек","Бақа"],
- c:2
-},
-{
- q:"30. Табиғатты қорғаудың дұрыс жолы?",
- a:["Қоқысты кез келген жерге тастау","Суды ластау","Ағаштарды себепсіз кесу","Қоқысты сұрыптап, табиғатты таза ұстау"],
- c:3
-}
-];
+    ("Компьютерлік вирус дегеніміз не?",
+     ["A) Зиян келтіруі мүмкін бағдарлама", "B) Құрылғы", "C) Браузер", "D) Құжат"], "A"),
 
-let index = 0;
-let score = 0;
+    ("Бұлттық сақтау не үшін керек?",
+     ["A) Файлдарды интернетте сақтау үшін", "B) Экранды тазалау үшін", "C) Компьютерді суыту үшін", "D) Дыбысты күшейту үшін"], "A"),
 
-function showQuestion() {
-  const q = questions[index];
+    ("Компьютерлік желі не үшін керек?",
+     ["A) Құрылғылар мен ақпаратты байланыстыру үшін", "B) Тек ойын үшін", "C) Тек сурет үшін", "D) Тек музыка үшін"], "A"),
 
-  document.getElementById("counter").textContent =
-    "Сұрақ " + (index + 1) + " / " + questions.length;
+    ("Бағдарлама дегеніміз не?",
+     ["A) Компьютер орындайтын командалар жиынтығы", "B) Монитор", "C) Тінтуір", "D) Кабель"], "A")
+]
 
-  document.getElementById("bar").style.width =
-    (index / questions.length * 100) + "%";
+score = 0
 
-  document.getElementById("question").textContent = q.q;
+print("=" * 45)
+print("💻 ИНФОРМАТИКА БОЙЫНША ТЕСТ")
+print("Барлығы 30 сұрақ")
+print("=" * 45)
 
-  const answers = document.getElementById("answers");
-  answers.innerHTML = "";
+for i, (question, answers, correct) in enumerate(questions, 1):
+    print(f"\n{i}. {question}")
 
-  q.a.forEach((answer, i) => {
-    const label = document.createElement("label");
-    label.className = "option";
+    for answer in answers:
+        print(answer)
 
-    const radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = "answer";
-    radio.value = i;
+    user_answer = input("Жауабыңды енгіз (A/B/C/D): ").strip().upper()
 
-    label.appendChild(radio);
-    label.appendChild(document.createTextNode(answer));
+    if user_answer == correct:
+        print("✅ Дұрыс!")
+        score += 1
+    else:
+        print(f"❌ Қате! Дұрыс жауап: {correct}")
 
-    answers.appendChild(label);
-  });
+print("\n" + "=" * 45)
+print("🏆 ТЕСТ АЯҚТАЛДЫ!")
+print(f"Сенің нәтижең: {score}/30")
 
-  document.getElementById("next").textContent =
-    index === questions.length - 1
-    ? "Нәтижені көру 🏆"
-    : "Келесі сұрақ →";
-}
+if score >= 27:
+    print("Баға: Өте жақсы! 🌟")
+elif score >= 20:
+    print("Баға: Жақсы! 👍")
+elif score >= 15:
+    print("Баға: Қанағаттанарлық 🙂")
+else:
+    print("Тағы дайындалып көр! 💪")
 
-function nextQuestion() {
-  const selected =
-    document.querySelector('input[name="answer"]:checked');
-
-  if (!selected) {
-    alert("Алдымен жауапты таңда!");
-    return;
-  }
-
-  if (Number(selected.value) === questions[index].c) {
-    score++;
-  }
-
-  index++;
-
-  if (index < questions.length) {
-    showQuestion();
-  } else {
-    showResult();
-  }
-}
-
-function showResult() {
-  document.getElementById("quiz").classList.add("hidden");
-  document.getElementById("finish").classList.remove("hidden");
-
-  document.getElementById("bar").style.width = "100%";
-
-  document.getElementById("result").textContent =
-    score + " / " + questions.length + " ұпай";
-
-  let message;
-
-  if (score >= 27) {
-    message = "🏆 Керемет! Биологияны өте жақсы білесің!";
-  } else if (score >= 22) {
-    message = "👏 Жарайсың! Нәтижең өте жақсы!";
-  } else if (score >= 15) {
-    message = "👍 Жақсы! Біліміңді жетілдіре бер!";
-  } else {
-    message = "📚 Қайталап оқып, қайта сынап көр!";
-  }
-
-  document.getElementById("message").textContent = message;
-}
-
-function restart() {
-  index = 0;
-  score = 0;
-
-  document.getElementById("finish").classList.add("hidden");
-  document.getElementById("quiz").classList.remove("hidden");
-
-  showQuestion();
-}
-
-showQuestion();
-</script>
-
-</body>
-</html>
+print("=" * 45)
